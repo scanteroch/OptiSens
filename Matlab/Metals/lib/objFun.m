@@ -26,15 +26,15 @@ function [f, g] = objFun(candSol,NmaxSns,NmaxAct,N_smpl,Nvar,x_cost,...
     g_aux2=zeros(NmaxSns,N_smpl);
     for i=1:N_smpl
         P_aux=P_sns_eval(:,:,:,:,i);
-        P_aux4=permute(sum(reshape(z.*reshape(permute (sum(reshape(w.*reshape(permute (P_aux,[3 1 2 4]), NmaxAct,Nvar*Nvar*NmaxSns),NmaxAct,Nvar,Nvar,NmaxSns),1),[4,2,3,1]),NmaxSns,Nvar*Nvar),NmaxAct,Nvar,Nvar),1),[2,3,1]);
-        f_aux(i)=log(det(P_aux4));
+        Q=permute(sum(reshape(z.*reshape(permute (sum(reshape(w.*reshape(permute (P_aux,[3 1 2 4]), NmaxAct,Nvar*Nvar*NmaxSns),NmaxAct,Nvar,Nvar,NmaxSns),1),[4,2,3,1]),NmaxSns,Nvar*Nvar),NmaxAct,Nvar,Nvar),1),[2,3,1]);
+        f_aux(i)=log(det(Q));
         
         for l=1:NmaxAct
-            g_aux1(l,i)=trace(P_aux4\sum(permute(reshape(w.*reshape(permute(P_aux(:,:,:,l),[3 1 2]),NmaxSns,Nvar*Nvar),NmaxSns,Nvar,Nvar),[2,3,1]),3));
+            g_aux1(l,i)=trace(Q\sum(permute(reshape(w.*reshape(permute(P_aux(:,:,:,l),[3 1 2]),NmaxSns,Nvar*Nvar),NmaxSns,Nvar,Nvar),[2,3,1]),3));
         end
 
         for j=1:NmaxSns
-            g_aux2(j,i)=trace(P_aux4\sum(permute(reshape(z.*reshape(permute(permute(P_aux(:,:,j,:),[1,2,4,3]),[3 1 2]),NmaxSns,Nvar*Nvar),NmaxSns,Nvar,Nvar),[2,3,1]),3));
+            g_aux2(j,i)=trace(Q\sum(permute(reshape(z.*reshape(permute(permute(P_aux(:,:,j,:),[1,2,4,3]),[3 1 2]),NmaxSns,Nvar*Nvar),NmaxSns,Nvar,Nvar),[2,3,1]),3));
         end
 
     end
