@@ -1,0 +1,23 @@
+ENTROPY-BASED CONVEX OPTIMIZATION - ISOTROPIC PLATE
+Optimal sensor and actuator solution
+
+ PZT #     X       Y       z       w    
+------- ------- ------- ------- ------- 
+      1  -0.900  -0.450   0.995   0.995
+      2  -0.817   0.407   0.994   0.994
+      3   0.900  -0.450   0.992   0.992
+      4   0.900  -0.177   0.910   0.910
+      5   0.328   0.018   0.909   0.909
+      6  -0.626   0.342   0.431   0.431
+      7  -0.800  -0.400   0.311   0.311
+
+NOMENCLATURE
+X   - X coordinate of the sensor/actuator [m]
+Y   - Y coordinate of the sensor/actuator [m]
+z   - Continuous decision variable for sensors
+w   - Continuous decision variable for actuators
+
+--------------------------------------------------
+
+
+The optimal number of sensors and actuators is: 12.38
