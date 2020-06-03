@@ -188,13 +188,13 @@ def objFun(candSol,NmaxSns,NmaxAct,N_smpl,Nvar,x_cost,y_cost,P_sns_eval):
     g_aux2=np.zeros((NmaxSns,N_smpl))
     for i in np.arange(0,N_smpl):
         P_aux=np.array(P_sns_eval[:,:,:,:,i])
-        P_aux4=np.sum(np.reshape((z*np.reshape(np.transpose(np.sum(np.reshape((w*np.reshape(np.transpose(P_aux,(2,0,1,3)),(NmaxAct,Nvar*Nvar*NmaxSns)).T).T,(NmaxAct,Nvar,Nvar,NmaxSns)),0),(2,0,1)),(NmaxSns,Nvar*Nvar)).T).T,(NmaxAct,Nvar,Nvar)),0)
-        f_aux[i]=np.log(np.linalg.det(P_aux4))
+        Q=np.sum(np.reshape((z*np.reshape(np.transpose(np.sum(np.reshape((w*np.reshape(np.transpose(P_aux,(2,0,1,3)),(NmaxAct,Nvar*Nvar*NmaxSns)).T).T,(NmaxAct,Nvar,Nvar,NmaxSns)),0),(2,0,1)),(NmaxSns,Nvar*Nvar)).T).T,(NmaxAct,Nvar,Nvar)),0)
+        f_aux[i]=np.log(np.linalg.det(Q))
         # For loops to address the gradient (Jacobian)
         for l in np.arange(0,NmaxAct):
-            g_aux1[l,i]=np.trace(np.linalg.solve(P_aux4,np.sum(np.transpose(np.reshape((w*np.reshape(np.transpose(P_aux[:,:,:,l],[2,0,1]),(NmaxSns,Nvar*Nvar)).T).T,(NmaxSns,Nvar,Nvar)),[1,2,0]),2)))
+            g_aux1[l,i]=np.trace(np.linalg.solve(Q,np.sum(np.transpose(np.reshape((w*np.reshape(np.transpose(P_aux[:,:,:,l],[2,0,1]),(NmaxSns,Nvar*Nvar)).T).T,(NmaxSns,Nvar,Nvar)),[1,2,0]),2)))
         for j in np.arange(0,NmaxSns):
-            g_aux2[j,i]=np.trace(np.linalg.solve(P_aux4,np.sum(np.transpose(np.reshape((z* np.reshape(np.transpose(P_aux[:,:,j,:],[2,0,1]),(NmaxSns,Nvar*Nvar)).T).T,(NmaxSns,Nvar,Nvar)),[1,2,0]),2)))
+            g_aux2[j,i]=np.trace(np.linalg.solve(Q,np.sum(np.transpose(np.reshape((z* np.reshape(np.transpose(P_aux[:,:,j,:],[2,0,1]),(NmaxSns,Nvar*Nvar)).T).T,(NmaxSns,Nvar,Nvar)),[1,2,0]),2)))
     
     # Cost function evaluation
     costPchip=PchipInterpolator(x_cost,y_cost)
